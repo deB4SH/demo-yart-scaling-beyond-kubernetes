@@ -1,0 +1,22 @@
+{
+    "$id": "https://schema.b4sh.de/configuration/terraform.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Terraform Configuration",
+    "type": "object",
+    "properties": {
+        "azureDefaults":{
+            "type": "object",
+            "description": "Describes many defaults to use within the infrastructure. Common reference point for unique values",
+            "$ref": "azure/azureDefaults.json"
+        },
+        "azureRessourceGroup": {
+            "type": "object",
+            "description": "Azure Ressource Group configuration values",
+            "$ref": "azure/azureRessourceGroup.json"
+        }
+    },
+    "required": [
+        "azureDefaults",
+        "azureRessourceGroup"
+    ]
+}

@@ -1,0 +1,30 @@
+{
+    "$id": "https://schema.b4sh.de/configuration/azure/azureBackend.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Backend Azure Variable Schema",
+    "type": "object",
+    "properties": {
+        "subscription": {
+            "type": "string",
+            "description": "Subscription ID"
+        },
+        "ressourceGroupName": {
+            "type": "string",
+            "description": "Designated ressource group name for ressources"
+        },
+        "storageAccountName": {
+            "type": "string",
+            "description": "Designated storage account ,name."
+        },
+        "location":{
+            "type": "string",
+            "description": "Location to use in azure.",
+            "default": "westeurope"
+        }
+    },
+    "required": [
+        "subscription",
+        "ressourceGroupName",
+        "storageAccountName"
+    ]
+}

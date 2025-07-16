@@ -1,0 +1,17 @@
+{
+    "$id": "https://schema.b4sh.de/configuration/tanzu/tkc.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "TKC Configuration Schema",
+    "type": "object",
+    "properties": {
+      "metadata": {
+        "type": "object",
+        "$ref": "../../generic/kubernetes-metadata.json"
+      },
+      "spec": {
+          "type": "object",
+          "$ref": "tkc-spec.json"
+      }
+    },
+    "required": ["metadata", "spec"]
+  }

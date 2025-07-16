@@ -1,0 +1,22 @@
+{
+  "$id": "https://schema.b4sh.de/configuration/azure/azureRessourceGroup.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Azure Ressource Group Variable Schema",
+  "type": "object",
+  "properties": {
+    "location": {
+      "type": "string",
+      "default": "westeurope",
+      "description": "Location to use for ressource group"
+    },
+    "additionalTags": {
+      "type": "array",
+      "items": {
+        "$ref": "../../generic/key-value.json"
+      }
+    }
+  },
+  "required": [
+    
+  ]
+}

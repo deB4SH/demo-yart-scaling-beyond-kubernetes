@@ -1,0 +1,27 @@
+{
+    "$id": "https://schema.b4sh.de/configuration/tanzu/tkc-spec.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Tanzu Cluster Spec Schema",
+    "type": "object",
+    "properties": {
+        "controlplane": {
+            "type": "object",
+            "$ref": "controlPlane.json"
+        },
+        "nodepool": {
+            "type": "array",
+            "items": {
+                "$ref": "nodePools.json"
+            }
+        },
+        "tanzukubernetesrelease": {
+            "type": "string",
+            "default": "v1.29.1---vmware.1-fips.1-tkg.2",
+            "description": "Tanzu Version that is provided by vmware."
+        }
+    },
+    "required": [
+        "controlplane",
+        "nodepool"
+    ]
+}

@@ -1,0 +1,35 @@
+{
+    "$id": "https://schema.b4sh.de/configuration/azure/azureDefaults.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Azure Default Variable Schema",
+    "type": "object",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "Name of ressource group"
+        },
+        "tags": {
+            "type": "array",
+            "items": {
+                "$ref": "../../generic/key-value.json"
+            },
+            "default": [
+                {
+                    "key": "TF-Managed",
+                    "value": "true"
+                },
+                {
+                    "key": "TF-Workflow",
+                    "value": ""
+                },
+                {
+                    "key": "Maintainer",
+                    "value": "MyAwesomeGroup"
+                }
+            ]
+        }
+    },
+    "required": [
+        "name"
+    ]
+}

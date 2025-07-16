@@ -1,0 +1,27 @@
+{
+    "$id": "https://schema.b4sh.de/generic/kubernetes-metadata.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Kubernetes Metadata Schema",
+    "type": "object",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "metadata name of ressource to create"
+        },
+        "label": {
+            "type": "array",
+            "description": "Labels to add towards the resulting manifest",
+            "items": {
+                "$ref": "key-value.json"
+            }
+        },
+        "annotation": {
+            "type": "array",
+            "description": "Annotations to add towards the resulting manifest",
+            "items": {
+                "$ref": "key-value.json"
+            }
+        }
+    },
+    "required": []
+}
