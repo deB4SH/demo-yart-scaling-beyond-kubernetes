@@ -1,0 +1,25 @@
+{
+  "$id": "https://schema.b4sh.de/configuration/defaults.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Defaults Schema",
+  "type": "object",
+  "properties": {
+    "storageClass": {
+      "type": "string",
+      "description": "The storage class to use with every deployment."
+    },
+    "stage": {
+      "type": "string",
+      "default": "development",
+      "description": "The stage this cluster should serve in. Defaults to development"
+    },
+    "stageShorthand": {
+      "type": "string",
+      "default": "dev",
+      "description": "The stage this cluster should serve in as shorter handle. Defaults to dev"
+    }
+  },
+  "required": [
+    "storageClass"
+  ]
+}

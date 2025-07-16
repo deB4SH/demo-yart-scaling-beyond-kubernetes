@@ -1,0 +1,29 @@
+{
+  "$id": "https://schema.b4sh.de/configuration/cluster.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Cluster Configuration",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "defaults": {
+      "type": "object",
+      "$ref": "defaults.json"
+    },
+    "azureBackend": {
+      "type": "object",
+      "$ref": "azure/azureBackend.json"
+    },
+    "tkc": {
+      "type": "object",
+      "$ref": "tanzu/tkc.json"
+    }
+  },
+  "required": [
+    "name", 
+    "defaults",
+    "azureBackend",
+    "tkc"
+  ]
+}

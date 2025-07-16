@@ -1,0 +1,24 @@
+{
+    "$id": "https://schema.b4sh.de/configuration/multiCluster.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Mutli Fleet Cluster Creator Schema",
+    "type": "object",
+    "properties": {
+        "name": {
+            "type": "string"
+        },
+        "terraform": {
+            "type": "object",
+            "$ref": "terraform.json"
+        },
+        "cluster": {
+            "type": "object",
+            "$ref": "cluster.json"
+        }
+    },
+    "required": [
+        "name",
+        "terraform",
+        "cluster"
+    ]
+}

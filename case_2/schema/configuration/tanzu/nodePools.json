@@ -1,0 +1,58 @@
+{
+    "$id": "https://schema.b4sh.de/configuration/tanzu/nodepools.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Tanzu Cluster Spec Node Pools Schema",
+    "type": "object",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "Name of nodepool"
+        },
+        "replica": {
+            "type": "integer",
+            "description": "Amount of nodes to join this pool",
+            "default": "1"
+        },
+        "vmclass": {
+            "type": "string",
+            "description": "VM size to use for "
+        },
+        "taint": {
+            "type": "array",
+            "description": "Taints that should be applied to node pool",
+            "items": {
+                "$ref": "../../generic/kubernetes-taint.json"
+            }
+        },
+        "label": {
+            "type": "array",
+            "description": "Labels to add towards the resulting manifest",
+            "items": {
+                "$ref": "../../generic/key-value.json"
+            }
+        },
+        "volume":{
+            "type": "array",
+            "description": "Volumes to mount towards newly created vm. May be null.",
+            "items": {
+                "$ref": "../../generic/kubernetes-volume.json"
+            },
+            "default": [
+                {
+                    "name": "containerd",
+                    "mountpath": "/var/lib/containerd",
+                    "capacity": 32
+                },
+                {
+                    "name": "kubelet",
+                    "mountpath": "/var/lib/kubelet",
+                    "capacity": 8
+                }
+            ]
+        }
+    },
+    "required": [
+        "name",
+        "vmclass"
+    ]
+}

@@ -1,0 +1,27 @@
+---
+apiVersion: run.tanzu.vmware.com/v1alpha3
+kind: TanzuKubernetesCluster
+metadata:
+  name: barneycalhoun-blueshift
+  labels:
+    env: prod
+    argocd: enabled
+    maintainer: combine-nr-123
+  annotations:
+spec:
+  topology:
+    controlPlane:
+      replicas: 1
+      vmClass: best-effort-small
+      storageClass: zfs-pool-2
+      tkr:
+        reference:
+          name: 
+    nodePools:
+      - name: barney-workernodes-1
+        replicas: 10
+        vmClass: best-effort-medium
+        storageClass: zfs-pool-2
+        tkr:
+          reference:
+            name: 

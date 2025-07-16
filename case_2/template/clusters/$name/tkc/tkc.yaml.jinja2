@@ -1,0 +1,66 @@
+---
+apiVersion: run.tanzu.vmware.com/v1alpha3
+kind: TanzuKubernetesCluster
+metadata:
+  name: {{ cluster.tkc.metadata.name|default(cluster.name + "-" + cluster.defaults.stage,true) }}
+  labels:
+    {%- for elem in cluster.tkc.metadata.label %}
+    {{ elem.key }}: {{ elem.value }}
+    {%- endfor %}
+  annotations:
+    {%- for elem in cluster.tkc.metadata.annotation %}
+    {{ elem.key }}: {{ elem.value }}
+    {%- endfor %}
+spec:
+  topology:
+    controlPlane:
+      replicas: {{ cluster.tkc.spec.controlplane.replica }}
+      vmClass: {{ cluster.tkc.spec.controlplane.vmclass }}
+      storageClass: {{ cluster.defaults.storageClass }}
+      tkr:
+        reference:
+          name: {{ cluster.tkc.spec.tanzukubernetesrelease }}
+      {%- if cluster.tkc.spec.controlplane.volume|length > 0 %}
+      volumes:
+        {%- for volume in cluster.tkc.spec.controlplane.volume %}
+        - name: {{ volume.name }}
+          mountPath: {{ volume.mountpath }}
+          capacity:
+            storage: {{ volume.capacity }}Gi
+        {%- endfor %}
+      {%- endif %}
+    {%- if cluster.tkc.spec.nodepool|length > 0 %}
+    nodePools:
+      {%- for node in cluster.tkc.spec.nodepool %}
+      - name: {{ node.name }}
+        replicas: {{ node.replica }}
+        vmClass: {{ node.vmclass }}
+        storageClass: {{ cluster.defaults.storageClass }}
+        {%- if node.taint|length > 0 %}
+        taints:
+          {%- for taint in node.taint %}
+          - effect: {{ taint.effect}}
+            key: {{ taint.key }}
+            value: {{ taint.value }}
+          {%- endfor %}
+        {%- endif %}
+        {%- if node.label|length > 0 %}
+        labels:
+          {%- for elem in node.label %}
+          {{ elem.key }}: {{ elem.value }}
+          {%- endfor %}
+        {%- endif %}
+        {%- if cluster.tkc.spec.controlplane.volume|length > 0 %}
+        volumes:
+          {%- for volume in node.volume %}
+          - name: {{ volume.name }}
+            mountPath: {{ volume.mountpath }}
+            capacity:
+              storage: {{ volume.capacity }}Gi
+          {%- endfor %}
+        {%- endif %}
+        tkr:
+          reference:
+            name: {{ cluster.tkc.spec.tanzukubernetesrelease }}
+      {%- endfor %}
+    {%- endif %}

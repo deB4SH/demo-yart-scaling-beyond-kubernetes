@@ -1,0 +1,137 @@
+clusters:
+  - name: barneycalhoun
+    terraform:
+      azureDefaults:
+        name: blueshift
+      azureRessourceGroup:
+        location: westeurope
+    cluster:
+      name: barneycalhoun
+      defaults:
+        storageClass: zfs-pool-2
+        stage: blueshift
+        stageShorthand: blue
+      azureBackend:
+        subscription: 12345678-1234-4321-1234-12345678901
+        ressourceGroupName: rg-blueshift-tf-backend
+        storageAccountName: blueshifttfbackend
+      tkc:
+        metadata:
+          label: [
+              {
+                key: env,
+                value: prod
+              },
+              {
+                key: argocd,
+                value: enabled
+              },
+              {
+                key: maintainer,
+                value: combine-nr-123
+              }
+            ]
+        spec:
+          controlplane:
+            replica: 1
+            vmclass: best-effort-small
+          nodepool: [
+              {
+                name: "barney-workernodes-1",
+                replica: 10,
+                vmclass: "best-effort-medium",
+              }
+          ]
+  - name: gordonfreeman
+    terraform:
+      azureDefaults:
+        name: mesa
+      azureRessourceGroup:
+        location: westeurope
+    cluster:
+      name: gordonfreeman
+      defaults:
+        storageClass: zfs-pool-1
+        stage: blackmesa
+        stageShorthand: mesa
+      azureBackend:
+        subscription: 12345678-1234-4321-1234-12345678901
+        ressourceGroupName: rg-black-mesa-tf-backend
+        storageAccountName: halflifetfbackend
+      tkc:
+        metadata:
+          label: [
+              {
+                key: env,
+                value: prod
+              },
+              {
+                key: argocd,
+                value: enabled
+              },
+              {
+                key: monitoring,
+                value: enabled
+              },
+              {
+                key: security,
+                value: enabled
+              },
+              {
+                key: maintainer,
+                value: dr-isaac-kleiner
+              }
+            ]
+        spec:
+          controlplane:
+            replica: 3
+            vmclass: best-effort-small
+            volume: [
+                {
+                  name: "containerd",
+                  mountpath: "/var/lib/containerd",
+                  capacity: 8
+                },
+                {
+                  name: "kubelet",
+                  mountpath: "/var/lib/kubelet",
+                  capacity: 8
+                }
+              ]
+          nodepool: [
+              {
+                name: "freeman-workernodes-1",
+                replica: 5,
+                vmclass: "best-effort-medium",
+                volume: [
+                  {
+                    name: "containerd",
+                    mountpath: "/var/lib/containerd",
+                    capacity: 32
+                  },
+                  {
+                    name: "kubelet",
+                    mountpath: "/var/lib/kubelet",
+                    capacity: 32
+                  }
+                ]
+              },
+              {
+                name: "kleiner-workernodes-1",
+                replica: 3,
+                vmclass: "best-effort-xxlmedium",
+                taint: [
+                    {
+                      effect: "NoSchedule",
+                      key: "nodetype",
+                      value: "kleiner"
+                    }
+                  ],
+                label: [
+                    {
+                      key: "nodetype",
+                      value: "kleiner"
+                    }
+                  ]
+              }
+            ]

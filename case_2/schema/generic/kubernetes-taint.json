@@ -1,0 +1,21 @@
+{
+    "$id": "https://schema.b4sh.de/generic/kubernetes-taint.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Kubernetes Taint Schema",
+    "type": "object",
+    "properties": {
+      "effect": {
+        "type": "string",
+        "description": "Effect of taint"
+      },
+      "key": {
+        "type": "string",
+        "description": "Key of Taint"
+      },
+      "value": {
+        "type": "string",
+        "description": "Value of Taint"
+      }
+    },
+    "required": ["effect", "key", "value"]
+}

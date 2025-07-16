@@ -1,0 +1,26 @@
+{
+    "$id": "https://schema.b4sh.de/configuration/tanzu/controlplane.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Tanzu Cluster Spec ControlPlane Schema",
+    "type": "object",
+    "properties": {
+        "replica": {
+            "type": "integer",
+            "default": "1",
+            "description": "Amount of control planes to create."
+        },
+        "vmclass": {
+            "type": "string",
+            "default": "best-effort-medium",
+            "description": "VM description to use for control plane."
+        },
+        "volume":{
+            "type": "array",
+            "description": "Volumes to mount towards newly created vm. May be null.",
+            "items": {
+                "$ref": "../../generic/kubernetes-volume.json"
+            }
+        }
+    },
+    "required": []
+}
