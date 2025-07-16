@@ -1,0 +1,69 @@
+---
+apiVersion: run.tanzu.vmware.com/v1alpha3
+kind: TanzuKubernetesCluster
+metadata:
+  name: gordonfreeman-blackmesa
+  labels:
+    env: prod
+    argocd: enabled
+    monitoring: enabled
+    security: enabled
+    maintainer: dr-isaac-kleiner
+  annotations:
+spec:
+  topology:
+    controlPlane:
+      replicas: 3
+      vmClass: best-effort-small
+      storageClass: zfs-pool-1
+      tkr:
+        reference:
+          name: v1.29.1---vmware.1-fips.1-tkg.2
+      volumes:
+        - name: containerd
+          mountPath: /var/lib/containerd
+          capacity:
+            storage: 8Gi
+        - name: kubelet
+          mountPath: /var/lib/kubelet
+          capacity:
+            storage: 8Gi
+    nodePools:
+      - name: freeman-workernodes-1
+        replicas: 5
+        vmClass: best-effort-medium
+        storageClass: zfs-pool-1
+        volumes:
+          - name: containerd
+            mountPath: /var/lib/containerd
+            capacity:
+              storage: 32Gi
+          - name: kubelet
+            mountPath: /var/lib/kubelet
+            capacity:
+              storage: 32Gi
+        tkr:
+          reference:
+            name: v1.29.1---vmware.1-fips.1-tkg.2
+      - name: kleiner-workernodes-1
+        replicas: 3
+        vmClass: best-effort-xxlmedium
+        storageClass: zfs-pool-1
+        taints:
+          - effect: NoSchedule
+            key: nodetype
+            value: kleiner
+        labels:
+          nodetype: kleiner
+        volumes:
+          - name: containerd
+            mountPath: /var/lib/containerd
+            capacity:
+              storage: 32Gi
+          - name: kubelet
+            mountPath: /var/lib/kubelet
+            capacity:
+              storage: 8Gi
+        tkr:
+          reference:
+            name: v1.29.1---vmware.1-fips.1-tkg.2
